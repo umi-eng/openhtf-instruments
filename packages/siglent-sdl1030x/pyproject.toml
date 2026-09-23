@@ -1,0 +1,7 @@
+[project]
+name = "siglent-sdl1030x"
+version = "0.1.0"
+description = "OpenHTF PyVISA plug for the Siglent SDL1030X electronic load"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2"]
