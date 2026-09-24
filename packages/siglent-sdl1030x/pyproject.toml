@@ -1,5 +1,5 @@
 [project]
-name = "siglent-sdl1030x"
+name = "openhtf-plug-siglent-sdl1030x"
 version = "0.1.0"
 description = "OpenHTF PyVISA plug for the Siglent SDL1030X electronic load"
 readme = "README.md"

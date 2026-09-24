@@ -13,7 +13,7 @@ for example, install NI-VISA or `pyvisa-py` separately for the interfaces you
 use.
 
 ```sh
-uv add pyvisa openhtf
+uv add openhtf-plug-keysight-34970a
 ```
 
 ## Instrument-timed scan

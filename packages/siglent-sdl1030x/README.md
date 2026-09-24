@@ -8,7 +8,7 @@ resistance readings.
 ## Install
 
 ```sh
-uv add openhtf pyvisa
+uv add openhtf-plug-siglent-sdl1030x
 ```
 
 A VISA backend is also required. Install NI-VISA, or install `pyvisa-py` for

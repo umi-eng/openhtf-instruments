@@ -11,7 +11,7 @@ Add this package to the project and install a VISA backend suitable for the
 connection (for example, NI-VISA or `pyvisa-py`):
 
 ```sh
-uv add siglent-sdm3065x
+uv add openhtf-plug-siglent-sdm3065x
 uv add pyvisa-py
 ```
 

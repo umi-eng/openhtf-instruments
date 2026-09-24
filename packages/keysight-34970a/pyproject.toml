@@ -1,5 +1,5 @@
 [project]
-name = "keysight-34970a"
+name = "openhtf-plug-keysight-34970a"
 version = "0.1.0"
 description = "OpenHTF PyVISA plug for the HP/Agilent/Keysight 34970A"
 readme = "README.md"

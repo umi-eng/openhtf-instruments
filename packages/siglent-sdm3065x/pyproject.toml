@@ -1,5 +1,5 @@
 [project]
-name = "siglent-sdm3065x"
+name = "openhtf-plug-siglent-sdm3065x"
 version = "0.1.0"
 description = "OpenHTF PyVISA plug for the Siglent SDM3065X multimeter"
 readme = "README.md"

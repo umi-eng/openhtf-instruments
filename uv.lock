@@ -8,9 +8,9 @@ resolution-markers = [
 
 [manifest]
 members = [
-    "keysight-34970a",
-    "siglent-sdl1030x",
-    "siglent-sdm3065x",
+    "openhtf-plug-keysight-34970a",
+    "openhtf-plug-siglent-sdl1030x",
+    "openhtf-plug-siglent-sdm3065x",
     "umi-openhtf-instruments",
 ]
 
@@ -320,7 +320,7 @@ wheels = [
 ]
 
 [[package]]
-name = "keysight-34970a"
+name = "openhtf-plug-keysight-34970a"
 version = "0.1.0"
 source = { virtual = "packages/keysight-34970a" }
 dependencies = [
@@ -485,7 +485,7 @@ wheels = [
 ]
 
 [[package]]
-name = "siglent-sdl1030x"
+name = "openhtf-plug-siglent-sdl1030x"
 version = "0.1.0"
 source = { virtual = "packages/siglent-sdl1030x" }
 dependencies = [
@@ -496,7 +496,7 @@ dependencies = [
 requires-dist = [{ name = "pyvisa", specifier = ">=1.16.2" }]
 
 [[package]]
-name = "siglent-sdm3065x"
+name = "openhtf-plug-siglent-sdm3065x"
 version = "0.1.0"
 source = { virtual = "packages/siglent-sdm3065x" }
 dependencies = [
