@@ -72,11 +72,11 @@ _MEASURE_COMMANDS = {
 }
 
 
-class SiglentSDL1030XPlug(BasePlug):
-    """Control an SDL1030X through a PyVISA resource.
+class SiglentSDL1000XPlug(BasePlug):
+    """Control an SDL1000X-series electronic load through a PyVISA resource.
 
     ``resource_name`` is a VISA resource string, or can be supplied through
-    ``SIGLENT_SDL1030X_RESOURCE``. A resource can be injected for testing.
+    ``SIGLENT_SDL1000X_RESOURCE``. A resource can be injected for testing.
     """
 
     def __init__(
@@ -95,11 +95,11 @@ class SiglentSDL1030XPlug(BasePlug):
         resource_name = (
             resource_name
             if resource_name is not None
-            else os.environ.get("SIGLENT_SDL1030X_RESOURCE")
+            else os.environ.get("SIGLENT_SDL1000X_RESOURCE")
         )
         if resource is None and resource_name is None:
             raise ValueError(
-                "resource_name is required (or set SIGLENT_SDL1030X_RESOURCE)"
+                "resource_name is required (or set SIGLENT_SDL1000X_RESOURCE)"
             )
 
         self._resource_manager = resource_manager

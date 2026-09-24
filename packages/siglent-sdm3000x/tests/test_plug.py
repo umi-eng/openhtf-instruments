@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from siglent_sdm3065x import MeasurementFunction, SiglentSDM3065XPlug
+from siglent_sdm3000x import MeasurementFunction, SiglentSDM3000XPlug
 
 
 class FakeResource:
@@ -39,17 +39,17 @@ class FakeResourceManager:
         self.closed = True
 
 
-class SiglentSDM3065XPlugTest(unittest.TestCase):
+class SiglentSDM3000XPlugTest(unittest.TestCase):
     def test_identify(self):
-        resource = FakeResource({"*IDN?": "SIGLENT,SDM3065X,12345,1.0"})
-        plug = SiglentSDM3065XPlug(resource=resource)
+        resource = FakeResource({"*IDN?": "SIGLENT,SDM3000X,12345,1.0"})
+        plug = SiglentSDM3000XPlug(resource=resource)
 
-        self.assertEqual(plug.identify(), "SIGLENT,SDM3065X,12345,1.0")
+        self.assertEqual(plug.identify(), "SIGLENT,SDM3000X,12345,1.0")
         plug.close()
 
     def test_measurement_query_and_result(self):
         resource = FakeResource({"MEASure:VOLTage:DC? 10": "1.2345\n"})
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         self.assertEqual(plug.measure(MeasurementFunction.DC_VOLTAGE, range=10), 1.2345)
         self.assertEqual(resource.commands, ["MEASure:VOLTage:DC? 10"])
@@ -58,7 +58,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
 
     def test_function_alias_resolution_and_range(self):
         resource = FakeResource({"MEASure:FRESistance? AUTO": "12.5"})
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         self.assertEqual(plug.measure("four_wire_resistance", range="AUTO"), 12.5)
         self.assertEqual(resource.commands, ["MEASure:FRESistance? AUTO"])
@@ -66,7 +66,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
 
     def test_temperature_probe_options(self):
         resource = FakeResource({"MEASure:TEMPerature? THER,K": "23.5"})
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         self.assertEqual(
             plug.measure(
@@ -81,7 +81,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
 
     def test_capacitance_range_uses_manual_units(self):
         resource = FakeResource({"MEASure:CAPacitance? 2uF": "1e-6"})
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         self.assertEqual(plug.measure("CAPacitance", range="2uF"), 1e-6)
         self.assertEqual(resource.commands, ["MEASure:CAPacitance? 2uF"])
@@ -90,7 +90,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
     def test_resource_manager_configuration_and_ownership(self):
         resource = FakeResource()
         manager = FakeResourceManager(resource)
-        plug = SiglentSDM3065XPlug(
+        plug = SiglentSDM3000XPlug(
             "USB0::1::INSTR",
             resource_manager=manager,
             resource_kwargs={"open_timeout": 1000},
@@ -106,7 +106,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
 
     def test_invalid_function_and_range_are_rejected(self):
         resource = FakeResource()
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         with self.assertRaises(ValueError):
             plug.measure("not-a-measurement")
@@ -142,7 +142,7 @@ class SiglentSDM3065XPlugTest(unittest.TestCase):
                 pass
 
         resource = WriteReadResource()
-        plug = SiglentSDM3065XPlug(resource=resource)
+        plug = SiglentSDM3000XPlug(resource=resource)
 
         self.assertEqual(plug.measure(MeasurementFunction.DC_VOLTAGE), 3.3)
         self.assertEqual(resource.commands, ["MEASure:VOLTage:DC?"])

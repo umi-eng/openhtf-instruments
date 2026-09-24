@@ -5,5 +5,5 @@ An assortment of OpenHTF plugs for interacting with test instruments we use at U
 ## Instruments
 
 - [Keysight 34970A DAQ](packages/ketsight-34970a)
-- [Siglent SDL1030X DC Electronic Load](packages/siglent-sdl1030x)
-- [Siglent SDM3065X Digital Multimter](packages/siglent-sdm3065x)
+- [Siglent SDL1000X DC Electronic Load](packages/siglent-sdl1000x)
+- [Siglent SDM3000X Digital Multimeter](packages/siglent-sdm3000x)

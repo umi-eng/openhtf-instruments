@@ -1,7 +1,7 @@
 [project]
-name = "openhtf-plug-siglent-sdl1030x"
+name = "openhtf-plug-siglent-sdm3000x"
 version = "0.1.0"
-description = "OpenHTF PyVISA plug for the Siglent SDL1030X electronic load"
+description = "OpenHTF PyVISA plug for Siglent SDM3000X-series multimeters"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2"]

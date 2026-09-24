@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from siglent_sdl1030x import LoadMeasurement, LoadMode, SiglentSDL1030XPlug
+from siglent_sdl1000x import LoadMeasurement, LoadMode, SiglentSDL1000XPlug
 
 
 class FakeResource:
@@ -22,10 +22,10 @@ class FakeResource:
         self.closed = True
 
 
-class SiglentSDL1030XPlugTest(unittest.TestCase):
+class SiglentSDL1000XPlugTest(unittest.TestCase):
     def test_mode_and_level_commands(self):
         resource = FakeResource({"SOUR:FUNC?": "CURRENT", "SOUR:CURR?": "1.250"})
-        plug = SiglentSDL1030XPlug(resource=resource)
+        plug = SiglentSDL1000XPlug(resource=resource)
 
         plug.set_mode("CC")
         plug.set_level(1.25)
@@ -45,7 +45,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
 
     def test_mode_aliases_cover_all_static_modes(self):
         resource = FakeResource()
-        plug = SiglentSDL1030XPlug(resource=resource)
+        plug = SiglentSDL1000XPlug(resource=resource)
         for alias, mode in (
             ("CV", LoadMode.CV),
             ("CP", LoadMode.CP),
@@ -65,7 +65,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
                 "SOUR:RES?": "4.0",
             }
         )
-        plug = SiglentSDL1030XPlug(resource=resource)
+        plug = SiglentSDL1000XPlug(resource=resource)
 
         for mode, command, expected in (
             (LoadMode.CC, "SOUR:CURR", 0.5),
@@ -93,7 +93,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
                 "MEAS:RES?": "25",
             }
         )
-        plug = SiglentSDL1030XPlug(resource=resource)
+        plug = SiglentSDL1000XPlug(resource=resource)
 
         self.assertTrue(plug.input_enabled)
         plug.enable_input()
@@ -117,7 +117,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
         plug.close()
 
     def test_setpoint_validation_and_led_rejection(self):
-        plug = SiglentSDL1030XPlug(resource=FakeResource())
+        plug = SiglentSDL1000XPlug(resource=FakeResource())
         for value in (-1, float("inf"), float("nan")):
             with self.assertRaises(ValueError):
                 plug.set_level(value, LoadMode.CC)
@@ -129,7 +129,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
 
     def test_teardown_disables_input_and_closes_resource(self):
         resource = FakeResource()
-        plug = SiglentSDL1030XPlug(resource=resource)
+        plug = SiglentSDL1000XPlug(resource=resource)
 
         plug.tearDown()
 
@@ -138,7 +138,7 @@ class SiglentSDL1030XPlugTest(unittest.TestCase):
 
     def test_resource_is_required_without_environment_or_injection(self):
         with self.assertRaisesRegex(ValueError, "resource_name is required"):
-            SiglentSDL1030XPlug()
+            SiglentSDL1000XPlug()
 
 
 if __name__ == "__main__":

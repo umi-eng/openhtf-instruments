@@ -1,5 +1,5 @@
 def main():
-    print("Hello from siglent-sdm3065x!")
+    print("Hello from siglent-sdm3000x!")
 
 
 if __name__ == "__main__":

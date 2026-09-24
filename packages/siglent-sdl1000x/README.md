@@ -1,20 +1,21 @@
-# Siglent SDL1030X OpenHTF plug
+# Siglent SDL1000X OpenHTF plug
 
-This package controls the Siglent SDL1030X electronic load with PyVISA and the
-SDL1000X SCPI command set. It supports CC, CV, CP, CR, and LED mode selection;
+This package controls Siglent SDL1000X-series electronic loads with PyVISA and
+the SDL1000X SCPI command set, including the SDL1030X and SDL1020X. It
+supports CC, CV, CP, CR, and LED mode selection;
 static setpoints for CC/CV/CP/CR; input on/off; and voltage, current, power, and
 resistance readings.
 
 ## Install
 
 ```sh
-uv add openhtf-plug-siglent-sdl1030x
+uv add openhtf-plug-siglent-sdl1000x
 ```
 
 A VISA backend is also required. Install NI-VISA, or install `pyvisa-py` for
 supported USB, serial, or TCP/IP connections.
 
-Set `SIGLENT_SDL1030X_RESOURCE` to the VISA resource name reported for your
+Set `SIGLENT_SDL1000X_RESOURCE` to the VISA resource name reported for your
 instrument (for example, use `ResourceManager().list_resources()` to discover
 it). Resource names vary by interface and VISA backend.
 
@@ -24,12 +25,12 @@ it). Resource names vary by interface and VISA backend.
 import os
 
 from openhtf import Test, plugs
-from siglent_sdl1030x import LoadMode, SiglentSDL1030XPlug
+from siglent_sdl1000x import LoadMode, SiglentSDL1000XPlug
 
-os.environ["SIGLENT_SDL1030X_RESOURCE"] = "USB0::...::INSTR"  # replace with your VISA resource
+os.environ["SIGLENT_SDL1000X_RESOURCE"] = "USB0::...::INSTR"  # replace with your VISA resource
 
 
-@plugs.plug(load=SiglentSDL1030XPlug)
+@plugs.plug(load=SiglentSDL1000XPlug)
 def load_test(test_api, load):
     load.set_mode(LoadMode.CC)
     load.set_level(0.5)  # amps; uses the selected mode

@@ -1,4 +1,4 @@
-"""OpenHTF/PyVISA plug for the Siglent SDM3065X multimeter."""
+"""OpenHTF/PyVISA plug for the Siglent SDM3000X multimeter."""
 
 from __future__ import annotations
 
@@ -88,11 +88,11 @@ def _format_temperature_option(value: str, name: str) -> str:
     return value.strip()
 
 
-class SiglentSDM3065XPlug(BasePlug):
-    """Take single SDM3065X measurements over any PyVISA interface.
+class SiglentSDM3000XPlug(BasePlug):
+    """Take single SDM3000X measurements over any PyVISA interface.
 
     ``resource_name`` is a PyVISA resource string, or set
-    ``SIGLENT_SDM3065X_RESOURCE``. A resource or resource manager can be
+    ``SIGLENT_SDM3000X_RESOURCE``. A resource or resource manager can be
     injected for tests.
     """
 
@@ -109,11 +109,11 @@ class SiglentSDM3065XPlug(BasePlug):
         write_termination: str = "\n",
     ) -> None:
         super().__init__()
-        resource_name = resource_name or os.environ.get("SIGLENT_SDM3065X_RESOURCE")
+        resource_name = resource_name or os.environ.get("SIGLENT_SDM3000X_RESOURCE")
         if resource is None and resource_name is None:
             raise ValueError(
                 "resource_name is required when resource is not supplied "
-                "(or set SIGLENT_SDM3065X_RESOURCE)"
+                "(or set SIGLENT_SDM3000X_RESOURCE)"
             )
 
         self._owns_resource_manager = resource_manager is None and resource is None
@@ -242,4 +242,4 @@ class SiglentSDM3065XPlug(BasePlug):
         self.close()
 
 
-__all__ = ["MeasurementFunction", "SiglentSDM3065XPlug"]
+__all__ = ["MeasurementFunction", "SiglentSDM3000XPlug"]
