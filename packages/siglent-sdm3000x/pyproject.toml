@@ -1,3 +1,10 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["siglent_sdm3000x"]
+
 [project]
 name = "openhtf-plug-siglent-sdm3000x"
 version = "0.1.0"

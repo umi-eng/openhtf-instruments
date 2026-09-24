@@ -1,3 +1,10 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["keysight_34970a"]
+
 [project]
 name = "openhtf-plug-keysight-34970a"
 version = "0.1.0"

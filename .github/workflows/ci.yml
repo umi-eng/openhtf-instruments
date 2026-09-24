@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint and validate lockfile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+          enable-cache: true
+      - name: Check lockfile
+        run: uv lock --check
+      - name: Run Ruff
+        run: uvx ruff check packages
+
+  build:
+    name: Build ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package: openhtf-plug-keysight-34970a
+            directory: packages/keysight-34970a
+          - package: openhtf-plug-siglent-sdl1000x
+            directory: packages/siglent-sdl1000x
+          - package: openhtf-plug-siglent-sdm3000x
+            directory: packages/siglent-sdm3000x
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.13"
+          enable-cache: true
+      - name: Build package
+        run: uv build --package "${{ matrix.package }}"
+      - name: Run unit tests
+        working-directory: ${{ matrix.directory }}
+        run: uv run --locked --package "${{ matrix.package }}" python -m unittest discover -s tests
