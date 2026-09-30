@@ -11,6 +11,7 @@ members = [
     "openhtf-plug-keysight-34970a",
     "openhtf-plug-siglent-sdl1000x",
     "openhtf-plug-siglent-sdm3000x",
+    "openhtf-plug-siglent-spd3303x",
     "umi-openhtf-instruments",
 ]
 
@@ -383,6 +384,21 @@ requires-dist = [
 name = "openhtf-plug-siglent-sdm3000x"
 version = "0.1.0"
 source = { editable = "packages/siglent-sdm3000x" }
+dependencies = [
+    { name = "openhtf" },
+    { name = "pyvisa" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "pyvisa", specifier = ">=1.16.2" },
+]
+
+[[package]]
+name = "openhtf-plug-siglent-spd3303x"
+version = "0.1.0"
+source = { editable = "packages/siglent-spd3303x" }
 dependencies = [
     { name = "openhtf" },
     { name = "pyvisa" },

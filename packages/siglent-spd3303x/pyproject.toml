@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["siglent_spd3303x"]
+
+[project]
+name = "openhtf-plug-siglent-spd3303x"
+version = "0.1.0"
+description = "OpenHTF PyVISA plug for the Siglent SPD3303X programmable DC power supply"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2"]
