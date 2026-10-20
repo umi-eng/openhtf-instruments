@@ -10,7 +10,7 @@ resolution-markers = [
 members = [
     "openhtf-plug-adcmt-ad7461a",
     "openhtf-plug-keysight-34970a",
-    "openhtf-plug-siglent-sdg100x-plus",
+    "openhtf-plug-siglent-sdg1000x-plus",
     "openhtf-plug-siglent-sdl1000x",
     "openhtf-plug-siglent-sdm3000x",
     "openhtf-plug-siglent-spd3000x",
@@ -383,9 +383,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "openhtf-plug-siglent-sdg100x-plus"
+name = "openhtf-plug-siglent-sdg1000x-plus"
 version = "0.1.0"
-source = { editable = "packages/siglent-sdg100x-plus" }
+source = { editable = "packages/siglent-sdg1000x-plus" }
 dependencies = [
     { name = "openhtf" },
     { name = "pyvisa" },

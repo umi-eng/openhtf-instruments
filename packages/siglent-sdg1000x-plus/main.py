@@ -1,6 +1,6 @@
 """Compatibility entry point and public re-exports for the package."""
 
-from siglent_sdg100x_plus import (
+from siglent_sdg1000x_plus import (
     Channel,
     OutputPolarity,
     OutputSettings,
@@ -21,7 +21,7 @@ __all__ = [
 
 def main() -> None:
     print(
-        "Import SiglentSDG1000XPlusPlug from siglent_sdg100x_plus "
+        "Import SiglentSDG1000XPlusPlug from siglent_sdg1000x_plus "
         "to control an SDG1000X Plus."
     )
 

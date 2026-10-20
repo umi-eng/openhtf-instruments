@@ -8,7 +8,7 @@ and the C1-to-C2 tracking function.
 ## Install
 
 ```sh
-uv add openhtf-plug-siglent-sdg100x-plus
+uv add openhtf-plug-siglent-sdg1000x-plus
 ```
 
 Install a VISA backend appropriate for the connection, such as NI-VISA or
@@ -19,7 +19,7 @@ directly. A common LAN resource is `TCPIP0::192.0.2.10::inst0::INSTR`.
 
 ```python
 from openhtf import Test, plugs
-from siglent_sdg100x_plus import Channel, SiglentSDG1000XPlusPlug, Waveform
+from siglent_sdg1000x_plus import Channel, SiglentSDG1000XPlusPlug, Waveform
 
 
 @plugs.plug(generator=SiglentSDG1000XPlusPlug)

@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 from typing import cast
 
-from siglent_sdg100x_plus import (
+from siglent_sdg1000x_plus import (
     Channel,
     OutputPolarity,
     OutputSettings,
