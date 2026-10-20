@@ -1,4 +1,4 @@
-"""OpenHTF/PyVISA plug for the Siglent SPD3303X power supply."""
+"""OpenHTF/PyVISA plug for Siglent SPD3000X series power supplies."""
 
 from __future__ import annotations
 
@@ -87,8 +87,8 @@ _STATUS_MODE_BITS = {
 }
 
 
-class SiglentSPD3303XPlug(BasePlug):
-    """Control an SPD3303X through a PyVISA resource."""
+class SiglentSPD3000XPlug(BasePlug):
+    """Control an SPD3000X through a PyVISA resource."""
 
     def __init__(
         self,
@@ -104,10 +104,10 @@ class SiglentSPD3303XPlug(BasePlug):
     ) -> None:
         super().__init__()
         if resource_name is None:
-            resource_name = os.environ.get("SIGLENT_SPD3303X_RESOURCE")
+            resource_name = os.environ.get("SIGLENT_SPD3000X_RESOURCE")
         if resource is None and resource_name is None:
             raise ValueError(
-                "resource_name is required (or set SIGLENT_SPD3303X_RESOURCE)"
+                "resource_name is required (or set SIGLENT_SPD3000X_RESOURCE)"
             )
 
         self._resource_manager = resource_manager
@@ -370,4 +370,4 @@ class SiglentSPD3303XPlug(BasePlug):
         self.close()
 
 
-__all__ = ["Channel", "OutputMode", "SiglentSPD3303XPlug", "SupplyMeasurement"]
+__all__ = ["Channel", "OutputMode", "SiglentSPD3000XPlug", "SupplyMeasurement"]

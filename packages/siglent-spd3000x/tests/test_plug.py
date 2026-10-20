@@ -3,10 +3,10 @@ from __future__ import annotations
 import unittest
 from typing import cast
 
-from siglent_spd3303x import (
+from siglent_spd3000x import (
     Channel,
     OutputMode,
-    SiglentSPD3303XPlug,
+    SiglentSPD3000XPlug,
     SupplyMeasurement,
 )
 
@@ -61,10 +61,10 @@ class FakeResourceManager:
         self.closed = True
 
 
-class SiglentSPD3303XPlugTest(unittest.TestCase):
+class SiglentSPD3000XPlugTest(unittest.TestCase):
     def test_identify_and_mode_readback(self):
         resource = FakeResource({"*IDN?": "Siglent Technologies,SPD3303X,123,1.0"})
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         self.assertEqual(plug.identify(), "Siglent Technologies,SPD3303X,123,1.0")
         for mode in OutputMode:
@@ -93,7 +93,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
                 "CH2:CURRent?": "2.0",
             }
         )
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         plug.set_voltage(5, Channel.CH1)
         plug.set_current(1, "CH1")
@@ -126,7 +126,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_series_and_parallel_limits_and_ch1_control(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         plug.set_output_mode(OutputMode.SERIES)
         plug.set_voltage(60)
@@ -152,7 +152,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_ch2_control_is_rejected_in_coupled_modes(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
         plug.set_output_mode(OutputMode.SERIES)
 
         for operation in (
@@ -171,7 +171,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_output_controls_and_coupled_all_outputs(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
         plug.enable_output("CH1")
         plug.enable_output("CH2")
         plug.enable_output("CH3")
@@ -206,7 +206,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
                 "MEASure:POWEr? CH2": "0.825",
             }
         )
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         self.assertEqual(
             plug.measure("CH2"),
@@ -226,7 +226,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_ch3_has_only_output_switching(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         plug.enable_output(Channel.CH3)
         with self.assertRaisesRegex(ValueError, "physical DIP switch"):
@@ -238,7 +238,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_setpoint_and_mode_validation(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         for value in (-0.1, 32.1, float("inf"), float("nan")):
             with self.assertRaises(ValueError):
@@ -264,7 +264,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
                     return "not-hex"
                 return "0"
 
-        plug = SiglentSPD3303XPlug(resource=InvalidStatusResource())
+        plug = SiglentSPD3000XPlug(resource=InvalidStatusResource())
         with self.assertRaisesRegex(ValueError, "invalid system status"):
             _ = plug.output_mode
         plug.close()
@@ -272,7 +272,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
     def test_resource_manager_configuration(self):
         resource = FakeResource()
         manager = FakeResourceManager(resource)
-        plug = SiglentSPD3303XPlug(
+        plug = SiglentSPD3000XPlug(
             "USB0::1::INSTR",
             resource_manager=manager,
             resource_kwargs={"open_timeout": 1000},
@@ -302,7 +302,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
                 pass
 
         resource = WriteReadResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         self.assertEqual(plug.identify(), "Siglent,SPD3303X,123,1.0")
         self.assertEqual(resource.commands, ["*IDN?"])
@@ -310,7 +310,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_teardown_switches_off_outputs_and_closes_resource(self):
         resource = FakeResource()
-        plug = SiglentSPD3303XPlug(resource=resource)
+        plug = SiglentSPD3000XPlug(resource=resource)
 
         plug.tearDown()
 
@@ -322,7 +322,7 @@ class SiglentSPD3303XPlugTest(unittest.TestCase):
 
     def test_resource_is_required_without_environment_or_injection(self):
         with self.assertRaisesRegex(ValueError, "resource_name is required"):
-            SiglentSPD3303XPlug()
+            SiglentSPD3000XPlug()
 
 
 if __name__ == "__main__":

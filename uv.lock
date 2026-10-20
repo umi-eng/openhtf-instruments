@@ -13,7 +13,7 @@ members = [
     "openhtf-plug-siglent-sdg100x-plus",
     "openhtf-plug-siglent-sdl1000x",
     "openhtf-plug-siglent-sdm3000x",
-    "openhtf-plug-siglent-spd3303x",
+    "openhtf-plug-siglent-spd3000x",
     "umi-openhtf-instruments",
 ]
 
@@ -428,9 +428,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "openhtf-plug-siglent-spd3303x"
+name = "openhtf-plug-siglent-spd3000x"
 version = "0.1.0"
-source = { editable = "packages/siglent-spd3303x" }
+source = { editable = "packages/siglent-spd3000x" }
 dependencies = [
     { name = "openhtf" },
     { name = "pyvisa" },

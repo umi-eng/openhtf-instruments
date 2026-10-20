@@ -1,4 +1,4 @@
-# Siglent SPD3303X OpenHTF plug
+# Siglent SPD3000X OpenHTF plug
 
 This package controls the Siglent SPD3303X/SPD3303X-E with PyVISA and SCPI. It
 supports independent, series, and parallel CH1/CH2 operation; voltage and
@@ -7,11 +7,11 @@ current setpoints; output switching; and voltage, current, and power readback.
 ## Install
 
 ```sh
-uv add openhtf-plug-siglent-spd3303x
+uv add openhtf-plug-siglent-spd3000x
 ```
 
 Install a VISA backend for your connection, such as NI-VISA or `pyvisa-py`.
-Set `SIGLENT_SPD3303X_RESOURCE` to your VISA resource name, or pass
+Set `SIGLENT_SPD3000X_RESOURCE` to your VISA resource name, or pass
 `resource_name` directly. Resource names can be listed with
 `pyvisa.ResourceManager().list_resources()`.
 
@@ -19,10 +19,10 @@ Set `SIGLENT_SPD3303X_RESOURCE` to your VISA resource name, or pass
 
 ```python
 from openhtf import Test, plugs
-from siglent_spd3303x import OutputMode, SiglentSPD3303XPlug
+from siglent_spd3000x import OutputMode, SiglentSPD3000XPlug
 
 
-@plugs.plug(supply=SiglentSPD3303XPlug)
+@plugs.plug(supply=SiglentSPD3000XPlug)
 def supply_test(test_api, supply):
     supply.set_output_mode(OutputMode.INDEPENDENT)
     supply.set_voltage(5.0, channel="CH1")
