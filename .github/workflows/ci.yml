@@ -35,6 +35,8 @@ jobs:
             directory: packages/siglent-sdl1000x
           - package: openhtf-plug-siglent-sdm3000x
             directory: packages/siglent-sdm3000x
+          - package: openhtf-plug-adcmt-ad7461a
+            directory: packages/adcmt-ad7461a
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
