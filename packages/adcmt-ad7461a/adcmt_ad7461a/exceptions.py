@@ -5,6 +5,10 @@ class AD7461AError(Exception):
     """Base class for AD7461A driver errors."""
 
 
+class USBTransportError(AD7461AError, RuntimeError):
+    """An error opening or using the AD7461A USB transport."""
+
+
 class ScpiError(AD7461AError, RuntimeError):
     """An error reported in the instrument's SCPI error queue."""
 

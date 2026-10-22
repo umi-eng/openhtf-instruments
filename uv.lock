@@ -361,11 +361,18 @@ dependencies = [
     { name = "pyvisa" },
 ]
 
+[package.optional-dependencies]
+usb = [
+    { name = "pyusb" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "pyusb", marker = "extra == 'usb'", specifier = ">=1.2.1" },
     { name = "pyvisa", specifier = ">=1.16.2" },
 ]
+provides-extras = ["usb"]
 
 [[package]]
 name = "openhtf-plug-keysight-34970a"
@@ -497,6 +504,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/3f/e8/7325d258199b159eb2c03fe32107533e2832e70e63f4fb88a6aa00023201/pyopenssl-26.4.0.tar.gz", hash = "sha256:28dfcce0162b9211413e26dfbfdf1d24317fbeba18fc93c12400a1856b2a0bc7", size = 182046, upload-time = "2026-08-01T19:50:50.512Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/51/ad/2cf6d3fa2fae5c79e1ed9960c0d42badd0f94d81dd12b50604cdc839e648/pyopenssl-26.4.0-py3-none-any.whl", hash = "sha256:f0eb0cb2d581d3ad2b9c489468485e7f2ab6727d08401bcf9d824c3caddf3c1c", size = 56026, upload-time = "2026-08-01T19:50:48.94Z" },
+]
+
+[[package]]
+name = "pyusb"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/00/6b/ce3727395e52b7b76dfcf0c665e37d223b680b9becc60710d4bc08b7b7cb/pyusb-1.3.1.tar.gz", hash = "sha256:3af070b607467c1c164f49d5b0caabe8ac78dbed9298d703a8dbf9df4052d17e", size = 77281, upload-time = "2025-01-08T23:45:01.866Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/b8/27e6312e86408a44fe16bd28ee12dd98608b39f7e7e57884a24e8f29b573/pyusb-1.3.1-py3-none-any.whl", hash = "sha256:bf9b754557af4717fe80c2b07cc2b923a9151f5c08d17bdb5345dac09d6a0430", size = 58465, upload-time = "2025-01-08T23:45:00.029Z" },
 ]
 
 [[package]]

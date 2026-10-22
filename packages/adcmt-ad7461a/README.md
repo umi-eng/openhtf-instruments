@@ -6,26 +6,60 @@ configuration, calculation, trigger, memory, system, and status-register
 operations through PyVISA. Raw `write()` and `query()` methods are also
 available for commands not wrapped by a convenience method.
 
-## Interface and driver note
+## Interfaces and USB command mode
 
-The manual describes SCPI mode as available over GPIB. Its USB interface uses
-ADCMT's proprietary USB driver, which this package does not implement. The
-plug accepts any PyVISA resource, including GPIB and serial resources, so a
-USB-to-serial transport or suitable VISA driver can be added without changing
-the instrument API. The USB driver/transport itself remains a follow-up.
+`ADCMTAD7461APlug` uses the documented SCPI subsystem commands through PyVISA,
+for example over GPIB. ADCMT's public 7461A USB sample instead uses its ADC-style
+command set over USB; it does not use the colon-prefixed SCPI subsystem
+commands wrapped by `ADCMTAD7461APlug`. `AD7461AUSBPlug` is a separate raw
+USB-command plug and intentionally provides only `write()`, `read()`,
+`query()`, and `identify()` until model-specific USB behavior is validated on
+hardware.
 
-Examples of resource names:
+The USB transport uses PyUSB to discover the AD7461A (VID `0x1334`, PID
+`0x0201` from the included ADCMT INF) and select the USB ID (default `1`). It
+uses the first bulk IN/OUT endpoints, reads the USB ID with ADCMT's vendor
+request, and sends the captured USB488 remote-enable request. It frames command
+bytes with ADCMT's 12-byte packet header, includes the padded body length,
+appends LF, and zero-pads to a 4-byte boundary. Each read sends a separate
+12-byte request frame and parses the response frame. Before connecting, select USB as the instrument
+interface; ADCMT's [USB-driver instructions](https://www.adcmt.com/download/usbdriver)
+state that 7461A/P instruments default to GPIB. The sample program and driver
+downloads are listed on ADCMT's [sample-program page](https://www.adcmt.com/download/sampleprogram).
 
-```text
-GPIB0::1::INSTR
-ASRL/dev/cu.usbserial-0001::INSTR
+Install the optional PyUSB dependency and a libusb backend:
+
+```sh
+uv add "openhtf-plug-adcmt-ad7461a[usb]"
+brew install libusb  # macOS
 ```
 
-Set a serial baud rate and any interface-specific PyVISA options using
-`baud_rate` or `resource_kwargs`. The manual recommends issuing a query and
-reading its response after each setting command over USB. Enable
-`verify_writes=True` to synchronize with `*OPC?` and check the SCPI error queue
-after every high-level setting command.
+The SCPI plug still accepts PyVISA resources such as `GPIB0::1::INSTR`; its
+`baud_rate` and `resource_kwargs` options are for serial/VISA resources.
+
+### Raw USB example
+
+```python
+from openhtf import Test, plugs
+from adcmt_ad7461a import AD7461AUSBPlug, parse_measurements
+
+
+@plugs.plug(multimeter=AD7461AUSBPlug)
+def measure_supply(test_api, multimeter):
+    identity = multimeter.identify()  # sends *IDN?; USB ID defaults to 1
+    multimeter.write("F1,R0,PR1,AZ0")  # DCV, auto range, sample rate 1, auto-zero off
+    multimeter.write("TRS0")  # immediate acquisition
+    volts = parse_measurements(multimeter.read())[0]
+    test_api.attachments.attach("identity", identity.encode())
+    test_api.attachments.attach("supply_voltage", str(volts).encode())
+
+
+Test(measure_supply).execute()
+```
+
+Use ADCMT's USB/ADC-style commands for this plug. The SCPI convenience methods
+such as `measure()` and `configure_measurement()` are available on
+`ADCMTAD7461APlug` and are not implemented by `AD7461AUSBPlug`.
 
 ## Installation
 
