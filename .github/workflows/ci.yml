@@ -31,6 +31,8 @@ jobs:
         include:
           - package: openhtf-plug-keysight-34970a
             directory: packages/keysight-34970a
+          - package: openhtf-plug-rohde-schwarz-ngp800
+            directory: packages/rohde-schwarz-ngp800
           - package: openhtf-plug-siglent-sdl1000x
             directory: packages/siglent-sdl1000x
           - package: openhtf-plug-siglent-sdm3000x
