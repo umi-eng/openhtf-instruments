@@ -10,6 +10,7 @@ resolution-markers = [
 members = [
     "openhtf-plug-adcmt-ad7461a",
     "openhtf-plug-keysight-34970a",
+    "openhtf-plug-rohde-schwarz-ngp800",
     "openhtf-plug-siglent-sdg1000x-plus",
     "openhtf-plug-siglent-sdl1000x",
     "openhtf-plug-siglent-sdm3000x",
@@ -378,6 +379,21 @@ provides-extras = ["usb"]
 name = "openhtf-plug-keysight-34970a"
 version = "0.1.0"
 source = { editable = "packages/keysight-34970a" }
+dependencies = [
+    { name = "openhtf" },
+    { name = "pyvisa" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "pyvisa", specifier = ">=1.16.2" },
+]
+
+[[package]]
+name = "openhtf-plug-rohde-schwarz-ngp800"
+version = "0.1.0"
+source = { editable = "packages/rohde-schwarz-ngp800" }
 dependencies = [
     { name = "openhtf" },
     { name = "pyvisa" },
