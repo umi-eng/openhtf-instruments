@@ -8,6 +8,8 @@ resolution-markers = [
 
 [manifest]
 members = [
+    "openhtf-adcmt-usb",
+    "openhtf-plug-adcmt-624x",
     "openhtf-plug-adcmt-ad7461a",
     "openhtf-plug-keysight-34970a",
     "openhtf-plug-rohde-schwarz-ngp800",
@@ -354,12 +356,11 @@ wheels = [
 ]
 
 [[package]]
-name = "openhtf-plug-adcmt-ad7461a"
+name = "openhtf-adcmt-usb"
 version = "0.1.0"
-source = { editable = "packages/adcmt-ad7461a" }
+source = { editable = "packages/adcmt-usb" }
 dependencies = [
     { name = "openhtf" },
-    { name = "pyvisa" },
 ]
 
 [package.optional-dependencies]
@@ -371,6 +372,44 @@ usb = [
 requires-dist = [
     { name = "openhtf", specifier = ">=1.6.1" },
     { name = "pyusb", marker = "extra == 'usb'", specifier = ">=1.2.1" },
+]
+provides-extras = ["usb"]
+
+[[package]]
+name = "openhtf-plug-adcmt-624x"
+version = "0.1.0"
+source = { editable = "packages/adcmt-624x" }
+dependencies = [
+    { name = "openhtf" },
+    { name = "openhtf-adcmt-usb", extra = ["usb"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "openhtf-adcmt-usb", extras = ["usb"], editable = "packages/adcmt-usb" },
+]
+
+[[package]]
+name = "openhtf-plug-adcmt-ad7461a"
+version = "0.1.0"
+source = { editable = "packages/adcmt-ad7461a" }
+dependencies = [
+    { name = "openhtf" },
+    { name = "openhtf-adcmt-usb" },
+    { name = "pyvisa" },
+]
+
+[package.optional-dependencies]
+usb = [
+    { name = "openhtf-adcmt-usb", extra = ["usb"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "openhtf-adcmt-usb", editable = "packages/adcmt-usb" },
+    { name = "openhtf-adcmt-usb", extras = ["usb"], marker = "extra == 'usb'", editable = "packages/adcmt-usb" },
     { name = "pyvisa", specifier = ">=1.16.2" },
 ]
 provides-extras = ["usb"]

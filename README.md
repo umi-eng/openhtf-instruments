@@ -5,9 +5,15 @@ An assortment of OpenHTF plugs for interacting with test instruments we use at U
 ## Instruments
 
 - [ADCMT AD7461A Digital Multimeter](packages/adcmt-ad7461a)
+- [ADCMT 6241A/6242 DC Voltage Current Source/Monitor](packages/adcmt-624x)
 - [Keysight 34970A DAQ](packages/ketsight-34970a)
 - [Rohde & Schwarz NGP800 Power Supply](packages/rohde-schwarz-ngp800)
 - [Siglent SDG1000X Plus Function/Arbitrary Waveform Generator](packages/siglent-sdg1000x-plus)
 - [Siglent SDL1000X DC Electronic Load](packages/siglent-sdl1000x)
 - [Siglent SDM3000X Digital Multimeter](packages/siglent-sdm3000x)
 - [Siglent SPD3000X Programmable Power Supply](packages/siglent-spd3000x)
+
+## Shared drivers
+
+- [ADCMT USB transport](packages/adcmt-usb) — raw USB protocol shared by the
+  ADCMT instrument plugs

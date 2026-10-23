@@ -11,7 +11,10 @@ version = "0.1.0"
 description = "OpenHTF SCPI and raw USB support for the ADCMT AD7461A digital multimeter"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2"]
+dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2", "openhtf-adcmt-usb>=0.1.0"]
 
 [project.optional-dependencies]
-usb = ["pyusb>=1.2.1"]
+usb = ["openhtf-adcmt-usb[usb]>=0.1.0"]
+
+[tool.uv.sources]
+openhtf-adcmt-usb = { workspace = true }

@@ -16,7 +16,9 @@ USB-command plug and intentionally provides only `write()`, `read()`,
 `query()`, and `identify()` until model-specific USB behavior is validated on
 hardware.
 
-The USB transport uses PyUSB to discover the AD7461A (VID `0x1334`, PID
+The USB transport is provided by the shared
+[`openhtf-adcmt-usb`](../adcmt-usb) package, which is also used by the ADCMT
+6241A/6242 plug. It uses PyUSB to discover the AD7461A (VID `0x1334`, PID
 `0x0201` from the included ADCMT INF) and select the USB ID (default `1`). It
 uses the first bulk IN/OUT endpoints, reads the USB ID with ADCMT's vendor
 request, and sends the captured USB488 remote-enable request. It frames command

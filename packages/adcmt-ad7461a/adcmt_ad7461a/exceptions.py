@@ -1,12 +1,10 @@
 """Exceptions raised by the ADCMT AD7461A plug."""
 
+from adcmt_usb.exceptions import ADCMTError, USBTransportError
 
-class AD7461AError(Exception):
-    """Base class for AD7461A driver errors."""
-
-
-class USBTransportError(AD7461AError, RuntimeError):
-    """An error opening or using the AD7461A USB transport."""
+# Keep the AD7461A-specific name as an alias of the shared base class so that
+# USBTransportError remains an AD7461AError for existing callers.
+AD7461AError = ADCMTError
 
 
 class ScpiError(AD7461AError, RuntimeError):
@@ -16,3 +14,6 @@ class ScpiError(AD7461AError, RuntimeError):
         self.code = code
         self.message = message
         super().__init__(f"SCPI error {code}: {message}")
+
+
+__all__ = ["AD7461AError", "ScpiError", "USBTransportError"]

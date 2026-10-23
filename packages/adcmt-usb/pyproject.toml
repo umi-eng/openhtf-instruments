@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["adcmt_usb"]
+
+[project]
+name = "openhtf-adcmt-usb"
+version = "0.1.0"
+description = "Shared raw USB transport for ADCMT instruments using the ADC USB driver protocol"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["openhtf>=1.6.1"]
+
+[project.optional-dependencies]
+usb = ["pyusb>=1.2.1"]

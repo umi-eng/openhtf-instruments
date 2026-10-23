@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["adcmt_624x"]
+
+[project]
+name = "openhtf-plug-adcmt-624x"
+version = "0.1.0"
+description = "OpenHTF USB plug for the ADCMT 6241A/6242 DC voltage current source/monitor"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["openhtf>=1.6.1", "openhtf-adcmt-usb[usb]>=0.1.0"]
+
+[tool.uv.sources]
+openhtf-adcmt-usb = { workspace = true }
