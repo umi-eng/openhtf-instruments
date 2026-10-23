@@ -3,12 +3,12 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["adcmt_ad7461a"]
+packages = ["adcmt_74x1"]
 
 [project]
-name = "openhtf-plug-adcmt-ad7461a"
+name = "openhtf-plug-adcmt-74x1"
 version = "0.1.0"
-description = "OpenHTF SCPI and raw USB support for the ADCMT AD7461A digital multimeter"
+description = "OpenHTF SCPI and raw USB support for the ADCMT 7461A/7461P/7451A digital multimeters"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = ["openhtf>=1.6.1", "pyvisa>=1.16.2", "openhtf-adcmt-usb>=0.1.0"]

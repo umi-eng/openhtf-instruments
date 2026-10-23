@@ -37,8 +37,8 @@ jobs:
             directory: packages/siglent-sdl1000x
           - package: openhtf-plug-siglent-sdm3000x
             directory: packages/siglent-sdm3000x
-          - package: openhtf-plug-adcmt-ad7461a
-            directory: packages/adcmt-ad7461a
+          - package: openhtf-plug-adcmt-74x1
+            directory: packages/adcmt-74x1
           - package: openhtf-adcmt-usb
             directory: packages/adcmt-usb
           - package: openhtf-plug-adcmt-624x

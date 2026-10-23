@@ -1,6 +1,6 @@
-"""OpenHTF SCPI support for the ADCMT AD7461A digital multimeter."""
+"""OpenHTF SCPI support for the ADCMT 7461A/7461P/7451A digital multimeters."""
 
-from .exceptions import AD7461AError, ScpiError, USBTransportError
+from .exceptions import ADCMT74X1Error, ScpiError, USBTransportError
 from .models import (
     ACFilter,
     ErrorEntry,
@@ -11,17 +11,17 @@ from .models import (
     TriggerSlope,
     TriggerSource,
 )
-from .plug import AD7461APlug, ADCMTAD7461APlug, parse_measurements
-from .usb import AD7461AUSBPlug, AD7461AUSBTransport, ADCMTAD7461AUSBPlug
+from .plug import AD74X1Plug, ADCMT74X1Plug, parse_measurements
+from .usb import AD74X1USBPlug, AD74X1USBTransport, ADCMT74X1USBPlug
 
 __all__ = [
     "ACFilter",
-    "AD7461AError",
-    "AD7461APlug",
-    "AD7461AUSBPlug",
-    "AD7461AUSBTransport",
-    "ADCMTAD7461APlug",
-    "ADCMTAD7461AUSBPlug",
+    "AD74X1Plug",
+    "AD74X1USBPlug",
+    "AD74X1USBTransport",
+    "ADCMT74X1Error",
+    "ADCMT74X1Plug",
+    "ADCMT74X1USBPlug",
     "ErrorEntry",
     "EventRegister",
     "InputTerminal",

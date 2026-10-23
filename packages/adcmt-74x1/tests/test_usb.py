@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import unittest
 
-from adcmt_ad7461a import (
-    AD7461AUSBPlug,
-    AD7461AUSBTransport,
+from adcmt_74x1 import (
+    AD74X1USBPlug,
+    AD74X1USBTransport,
     USBTransportError,
 )
 
@@ -122,21 +122,21 @@ class FakeUSBCore:
         return iter(self.devices)
 
 
-class AD7461AUSBTransportTest(unittest.TestCase):
+class AD74X1USBTransportTest(unittest.TestCase):
     def setUp(self):
         self.device = FakeDevice()
         self.usb_util = FakeUSBUtil()
         self.usb_core = FakeUSBCore([self.device])
 
     def create_transport(self, **kwargs):
-        return AD7461AUSBTransport(
+        return AD74X1USBTransport(
             usb_core=self.usb_core,
             usb_util=self.usb_util,
             timeout_ms=2500,
             **kwargs,
         )
 
-    def test_discovers_ad7461a_by_usb_id_and_claims_bulk_interface(self):
+    def test_discovers_74x1_by_usb_id_and_claims_bulk_interface(self):
         transport = self.create_transport(usb_id=1)
 
         self.assertEqual(
@@ -196,17 +196,17 @@ class AD7461AUSBTransportTest(unittest.TestCase):
 
     def test_frame_bytes_match_the_windows_capture(self):
         self.assertEqual(
-            AD7461AUSBTransport._frame_packet(1, 0x17, 1, b"H0"),
+            AD74X1USBTransport._frame_packet(1, 0x17, 1, b"H0"),
             bytes.fromhex("01 17 e8 00 04 00 00 00 01 00 00 00 48 30 0a 00"),
         )
         self.assertEqual(
-            AD7461AUSBTransport._frame_packet(2, 0x19, 0, b""),
+            AD74X1USBTransport._frame_packet(2, 0x19, 0, b""),
             bytes.fromhex("02 19 e6 00 00 00 00 00 00 00 00 00"),
         )
 
     def test_openhtf_plug_query_strips_only_crlf(self):
         transport = self.create_transport(usb_id=None)
-        plug = AD7461AUSBPlug(transport=transport)
+        plug = AD74X1USBPlug(transport=transport)
 
         self.assertEqual(plug.query("*IDN?"), "ADC,AD7461A,123456789,C00")
         self.assertEqual(
@@ -236,7 +236,7 @@ class AD7461AUSBTransportTest(unittest.TestCase):
 
     def test_openhtf_teardown_closes_transport(self):
         transport = self.create_transport(usb_id=None)
-        plug = AD7461AUSBPlug(transport=transport)
+        plug = AD74X1USBPlug(transport=transport)
 
         plug.tearDown()
 

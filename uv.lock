@@ -10,7 +10,7 @@ resolution-markers = [
 members = [
     "openhtf-adcmt-usb",
     "openhtf-plug-adcmt-624x",
-    "openhtf-plug-adcmt-ad7461a",
+    "openhtf-plug-adcmt-74x1",
     "openhtf-plug-keysight-34970a",
     "openhtf-plug-rohde-schwarz-ngp800",
     "openhtf-plug-siglent-sdg1000x-plus",
@@ -391,9 +391,9 @@ requires-dist = [
 ]
 
 [[package]]
-name = "openhtf-plug-adcmt-ad7461a"
+name = "openhtf-plug-adcmt-74x1"
 version = "0.1.0"
-source = { editable = "packages/adcmt-ad7461a" }
+source = { editable = "packages/adcmt-74x1" }
 dependencies = [
     { name = "openhtf" },
     { name = "openhtf-adcmt-usb" },

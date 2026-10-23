@@ -2,7 +2,7 @@
 
 This package provides an OpenHTF plug for the ADCMT 6241A and 6242 DC voltage
 current source/monitors. It uses the instrument's USB interface and ADCMT's ADC
-command set, not SCPI. The raw USB transport is shared with the AD7461A plug in
+command set, not SCPI. The raw USB transport is shared with the 74x1 plug in
 [`openhtf-adcmt-usb`](../adcmt-usb).
 
 The plug covers source and measurement configuration, output control, manual

@@ -4,7 +4,7 @@ An assortment of OpenHTF plugs for interacting with test instruments we use at U
 
 ## Instruments
 
-- [ADCMT AD7461A Digital Multimeter](packages/adcmt-ad7461a)
+- [ADCMT 7461A/7461P/7451A Digital Multimeters](packages/adcmt-74x1)
 - [ADCMT 6241A/6242 DC Voltage Current Source/Monitor](packages/adcmt-624x)
 - [Keysight 34970A DAQ](packages/ketsight-34970a)
 - [Rohde & Schwarz NGP800 Power Supply](packages/rohde-schwarz-ngp800)

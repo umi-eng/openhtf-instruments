@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import unittest
 
-from adcmt_ad7461a import (
+from adcmt_74x1 import (
     ACFilter,
-    ADCMTAD7461APlug,
+    ADCMT74X1Plug,
     ErrorEntry,
     EventRegister,
     MeasurementFunction,
@@ -51,7 +51,7 @@ class FakeResourceManager:
         self.closed = True
 
 
-class ADCMTAD7461APlugTest(unittest.TestCase):
+class ADCMT74X1PlugTest(unittest.TestCase):
     def test_identify_and_one_shot_measurement(self):
         resource = FakeResource(
             {
@@ -59,7 +59,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 ":MEASure:VOLTage:DC?": "DCV_ +1.234560E+00",
             }
         )
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         self.assertEqual(plug.identify(), "ADC Corp.,7461A,123456789,C00")
         self.assertEqual(plug.measure("DCV"), 1.23456)
@@ -75,7 +75,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
 
     def test_configure_measurement_and_headered_range_response(self):
         resource = FakeResource({":READ?": "R2W_ +1.250000E+02"})
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         plug.configure_measurement(
             MeasurementFunction.RESISTANCE,
@@ -103,7 +103,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
 
     def test_function_configuration_restrictions_and_coercion(self):
         resource = FakeResource()
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         plug.set_sampling_rate("DCV", "SSLOW")
         plug.set_ac_filter(MeasurementFunction.AC_DC_VOLTAGE, ACFilter.MEDIUM)
@@ -127,7 +127,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 ":FETCh?": "+3.0E+00,+4.0E+00",
             }
         )
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         self.assertEqual(plug.read_measurements(), (1.0, 2.0))
         self.assertEqual(plug.fetch_measurements(), (3.0, 4.0))
@@ -142,7 +142,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 ":STATus:MEASurement:EVENt?": "256",
             }
         )
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         plug.set_trigger_source(TriggerSource.BUS)
         plug.set_trigger_count(4)
@@ -179,7 +179,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 "*ESR?": "1",
             }
         )
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         plug.set_trace_enabled(True)
         plug.set_trace_range(0, 2)
@@ -199,7 +199,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 ":SYSTem:VERSion?": "1999.0",
             }
         )
-        plug = ADCMTAD7461APlug(resource=resource, verify_writes=True)
+        plug = ADCMT74X1Plug(resource=resource, verify_writes=True)
 
         plug.set_display(False)
         self.assertEqual(plug.scpi_version(), "1999.0")
@@ -216,7 +216,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
 
     def test_scpi_error_raises(self):
         resource = FakeResource({":SYSTem:ERRor?": '-113,"Undefined header"'})
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         with self.assertRaises(ScpiError) as error:
             plug.check_error()
@@ -226,7 +226,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
     def test_visa_resource_configuration_and_ownership(self):
         resource = FakeResource()
         manager = FakeResourceManager(resource)
-        plug = ADCMTAD7461APlug(
+        plug = ADCMT74X1Plug(
             "ASRL/dev/cu.usbserial-0001::INSTR",
             resource_manager=manager,
             resource_kwargs={"open_timeout": 1000},
@@ -259,7 +259,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
                 pass
 
         resource = WriteReadResource()
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         self.assertEqual(plug.identify(), "ADC Corp.,7461A,123,C00")
         self.assertEqual(resource.commands, ["*IDN?"])
@@ -267,7 +267,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
 
     def test_calculation_values_follow_documented_bounds(self):
         resource = FakeResource()
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         with self.assertRaises(ValueError):
             plug.set_reference_calculation("DCV", True, reference=1e14)
@@ -296,7 +296,7 @@ class ADCMTAD7461APlugTest(unittest.TestCase):
 
     def test_invalid_inputs_do_not_send_commands(self):
         resource = FakeResource()
-        plug = ADCMTAD7461APlug(resource=resource)
+        plug = ADCMT74X1Plug(resource=resource)
 
         with self.assertRaises(ValueError):
             plug.measure("not-a-function")

@@ -1,24 +1,24 @@
-# ADCMT AD7461A OpenHTF plug
+# ADCMT 7461A/7461P/7451A OpenHTF plug
 
-This package provides an OpenHTF plug for the ADCMT/Advantest AD7461A
-(7461A) digital multimeter. It exposes documented SCPI measurement,
-configuration, calculation, trigger, memory, system, and status-register
-operations through PyVISA. Raw `write()` and `query()` methods are also
-available for commands not wrapped by a convenience method.
+This package provides an OpenHTF plug for the ADCMT/Advantest 74x1 family of
+digital multimeters: the 7461A, 7461P, and 7451A. It exposes documented SCPI
+measurement, configuration, calculation, trigger, memory, system, and
+status-register operations through PyVISA. Raw `write()` and `query()` methods
+are also available for commands not wrapped by a convenience method.
 
 ## Interfaces and USB command mode
 
-`ADCMTAD7461APlug` uses the documented SCPI subsystem commands through PyVISA,
+`ADCMT74X1Plug` uses the documented SCPI subsystem commands through PyVISA,
 for example over GPIB. ADCMT's public 7461A USB sample instead uses its ADC-style
 command set over USB; it does not use the colon-prefixed SCPI subsystem
-commands wrapped by `ADCMTAD7461APlug`. `AD7461AUSBPlug` is a separate raw
+commands wrapped by `ADCMT74X1Plug`. `AD74X1USBPlug` is a separate raw
 USB-command plug and intentionally provides only `write()`, `read()`,
 `query()`, and `identify()` until model-specific USB behavior is validated on
 hardware.
 
 The USB transport is provided by the shared
 [`openhtf-adcmt-usb`](../adcmt-usb) package, which is also used by the ADCMT
-6241A/6242 plug. It uses PyUSB to discover the AD7461A (VID `0x1334`, PID
+6241A/6242 plug. It uses PyUSB to discover the instrument (VID `0x1334`, PID
 `0x0201` from the included ADCMT INF) and select the USB ID (default `1`). It
 uses the first bulk IN/OUT endpoints, reads the USB ID with ADCMT's vendor
 request, and sends the captured USB488 remote-enable request. It frames command
@@ -32,7 +32,7 @@ downloads are listed on ADCMT's [sample-program page](https://www.adcmt.com/down
 Install the optional PyUSB dependency and a libusb backend:
 
 ```sh
-uv add "openhtf-plug-adcmt-ad7461a[usb]"
+uv add "openhtf-plug-adcmt-74x1[usb]"
 brew install libusb  # macOS
 ```
 
@@ -43,10 +43,10 @@ The SCPI plug still accepts PyVISA resources such as `GPIB0::1::INSTR`; its
 
 ```python
 from openhtf import Test, plugs
-from adcmt_ad7461a import AD7461AUSBPlug, parse_measurements
+from adcmt_74x1 import AD74X1USBPlug, parse_measurements
 
 
-@plugs.plug(multimeter=AD7461AUSBPlug)
+@plugs.plug(multimeter=AD74X1USBPlug)
 def measure_supply(test_api, multimeter):
     identity = multimeter.identify()  # sends *IDN?; USB ID defaults to 1
     multimeter.write("F1,R0,PR1,AZ0")  # DCV, auto range, sample rate 1, auto-zero off
@@ -61,12 +61,12 @@ Test(measure_supply).execute()
 
 Use ADCMT's USB/ADC-style commands for this plug. The SCPI convenience methods
 such as `measure()` and `configure_measurement()` are available on
-`ADCMTAD7461APlug` and are not implemented by `AD7461AUSBPlug`.
+`ADCMT74X1Plug` and are not implemented by `AD74X1USBPlug`.
 
 ## Installation
 
 ```sh
-uv add openhtf-plug-adcmt-ad7461a
+uv add openhtf-plug-adcmt-74x1
 ```
 
 Install a VISA backend suitable for your GPIB or serial interface separately,
@@ -78,12 +78,12 @@ for example NI-VISA or `pyvisa-py` where supported.
 import os
 
 from openhtf import Test, plugs
-from adcmt_ad7461a import ADCMTAD7461APlug, MeasurementFunction
+from adcmt_74x1 import ADCMT74X1Plug, MeasurementFunction
 
-os.environ["ADCMT_AD7461A_RESOURCE"] = "GPIB0::1::INSTR"
+os.environ["ADCMT_74X1_RESOURCE"] = "GPIB0::1::INSTR"
 
 
-@plugs.plug(multimeter=ADCMTAD7461APlug)
+@plugs.plug(multimeter=ADCMT74X1Plug)
 def measure_supply(test_api, multimeter):
     volts = multimeter.measure(MeasurementFunction.DC_VOLTAGE)
     test_api.attachments.attach("supply_voltage", str(volts).encode())
@@ -110,6 +110,7 @@ source, then call `initiate()` and read results with `fetch_measurements()` or
 the method docstrings; use raw SCPI passthrough for advanced or model-specific
 commands.
 
-The AD7461A API covers 7461A features. Features identified by the manual as
-7461P-only (temperature measurement, second DC voltage channel, and digital
-output) are not exposed as typed helpers.
+The typed API covers the SCPI features shared by the 74x1 family. Features that
+are only available on some models — for example the 7461P temperature
+measurement, second DC voltage channel, and digital output — are not exposed as
+typed helpers; use raw SCPI passthrough for those.

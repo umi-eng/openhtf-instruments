@@ -1,4 +1,4 @@
-"""Public enums and value objects for the ADCMT AD7461A plug."""
+"""Public enums and value objects for the ADCMT 74x1 plug."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ def _normalize(value: str) -> str:
 
 
 class MeasurementFunction(str, Enum):
-    """Measurement functions supported by the AD7461A (7461A model)."""
+    """Measurement functions supported by the 7461A/7461P/7451A family."""
 
     DC_VOLTAGE = "VOLTage:DC"
     AC_VOLTAGE = "VOLTage:AC"
@@ -84,7 +84,7 @@ class MeasurementFunction(str, Enum):
             return aliases[key]
         except KeyError as exc:
             raise ValueError(
-                f"unsupported AD7461A measurement function: {value!r}"
+                f"unsupported ADCMT 74x1 measurement function: {value!r}"
             ) from exc
 
 

@@ -1,4 +1,4 @@
-"""OpenHTF/PyVISA support for the ADCMT AD7461A digital multimeter."""
+"""OpenHTF/PyVISA support for the ADCMT 7461A/7461P/7451A digital multimeters."""
 
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ _AC_FUNCTIONS = frozenset(
 def parse_measurements(response: str) -> tuple[float, ...]:
     """Parse numeric readings from the instrument's optional-header output.
 
-    The AD7461A can prefix each value with a measurement and calculation
+    The 74x1 family can prefix each value with a measurement and calculation
     header. Taking the final numeric token in each comma-delimited field avoids
     interpreting digits in headers such as ``R2W`` as measurement values.
     """
@@ -110,8 +110,8 @@ def _format_calculation_constant(value: float | str) -> str:
     )
 
 
-class ADCMTAD7461APlug(BasePlug):
-    """Control an ADCMT/Advantest AD7461A using its documented SCPI commands.
+class ADCMT74X1Plug(BasePlug):
+    """Control an ADCMT/Advantest 7461A, 7461P, or 7451A using SCPI commands.
 
     ``resource_name`` is passed directly to PyVISA. Typical examples are
     ``GPIB0::1::INSTR`` and ``ASRL/dev/cu.usbserial-0001::INSTR``. The USB
@@ -121,7 +121,7 @@ class ADCMTAD7461APlug(BasePlug):
     for tests and custom transports.
     """
 
-    ENVIRONMENT_VARIABLE = "ADCMT_AD7461A_RESOURCE"
+    ENVIRONMENT_VARIABLE = "ADCMT_74X1_RESOURCE"
 
     def __init__(
         self,
@@ -336,7 +336,7 @@ class ADCMTAD7461APlug(BasePlug):
     ) -> None:
         """Select a function and apply its optional range/sampling settings.
 
-        ``range`` and ``auto_range`` are mutually exclusive. The AD7461A
+        ``range`` and ``auto_range`` are mutually exclusive. The 74x1 family
         disables range commands for continuity and diode measurements; NPLC
         and aperture are disabled for frequency. AC filtering is only valid for
         AC voltage/current measurements.
@@ -455,7 +455,7 @@ class ADCMTAD7461APlug(BasePlug):
         return SamplingRate.coerce(response)
 
     def set_digits(self, function: MeasurementFunction | str, digits: int) -> None:
-        """Set displayed digits; valid AD7461A values are 3 through 6."""
+        """Set displayed digits; valid 74x1 values are 3 through 6."""
 
         measurement = self._function(function)
         if (
@@ -1020,14 +1020,14 @@ class ADCMTAD7461APlug(BasePlug):
         return self.query(":SYSTem:GPIB:DELimiter:BLOCk?").upper()
 
     def set_legacy_identity(self, enabled: bool) -> None:
-        """Select the legacy ``AD7461A`` model string for ``*IDN?`` (C00+)."""
+        """Select the legacy model string for ``*IDN?`` (C00+)."""
 
         if not isinstance(enabled, bool):
             raise TypeError("enabled must be a bool")
         self._write_setting(f":OIDentity {'ON' if enabled else 'OFF'}")
 
     def legacy_identity(self) -> bool:
-        """Return whether ``*IDN?`` uses the old AD7461A model name."""
+        """Return whether ``*IDN?`` uses the old model name."""
 
         return self.query(":OIDentity?").upper() in {"1", "ON"}
 
@@ -1176,6 +1176,6 @@ class ADCMTAD7461APlug(BasePlug):
         self.close()
 
 
-AD7461APlug = ADCMTAD7461APlug
+AD74X1Plug = ADCMT74X1Plug
 
-__all__ = ["AD7461APlug", "ADCMTAD7461APlug", "parse_measurements"]
+__all__ = ["AD74X1Plug", "ADCMT74X1Plug", "parse_measurements"]
