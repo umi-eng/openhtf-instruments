@@ -11,6 +11,7 @@ members = [
     "openhtf-adcmt-usb",
     "openhtf-plug-adcmt-624x",
     "openhtf-plug-adcmt-74x1",
+    "openhtf-plug-heraeus-voetsch-vrsu",
     "openhtf-plug-keysight-34970a",
     "openhtf-plug-rohde-schwarz-ngp800",
     "openhtf-plug-siglent-sdg1000x-plus",
@@ -413,6 +414,21 @@ requires-dist = [
     { name = "pyvisa", specifier = ">=1.16.2" },
 ]
 provides-extras = ["usb"]
+
+[[package]]
+name = "openhtf-plug-heraeus-voetsch-vrsu"
+version = "0.1.0"
+source = { editable = "packages/heraeus-voetsch-vrsu" }
+dependencies = [
+    { name = "openhtf" },
+    { name = "pyvisa" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "openhtf", specifier = ">=1.6.1" },
+    { name = "pyvisa", specifier = ">=1.16.2" },
+]
 
 [[package]]
 name = "openhtf-plug-keysight-34970a"
