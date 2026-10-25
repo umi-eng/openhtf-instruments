@@ -29,6 +29,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - package: openhtf-plug-heraeus-voetsch-vrsu
+            directory: packages/heraeus-voetsch-vrsu
           - package: openhtf-plug-keysight-34970a
             directory: packages/keysight-34970a
           - package: openhtf-plug-rohde-schwarz-ngp800

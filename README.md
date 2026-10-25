@@ -6,6 +6,7 @@ An assortment of OpenHTF plugs for interacting with test instruments we use at U
 
 - [ADCMT 7461A/7461P/7451A Digital Multimeters](packages/adcmt-74x1)
 - [ADCMT 6241A/6242 DC Voltage Current Source/Monitor](packages/adcmt-624x)
+- [Heraeus Voetsch VRSU IEEE-488/RS-232 Interface](packages/heraeus-voetsch-vrsu)
 - [Keysight 34970A DAQ](packages/ketsight-34970a)
 - [Rohde & Schwarz NGP800 Power Supply](packages/rohde-schwarz-ngp800)
 - [Siglent SDG1000X Plus Function/Arbitrary Waveform Generator](packages/siglent-sdg1000x-plus)
